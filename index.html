@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html>
+
+        <meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"> 
+        
+        <meta name="description" content="NN-DAG: Real-time Neural-network-based diffuse acoustic generator - Audio Demo">
+        <meta name="author" content="Anton Jeran Ratnarajah">
+        
+	    <title>NN-DAG - Audio Demo</title>
+        
+        <!-- Bootflat CSS -->
+        <link rel="stylesheet" href="css/bootflat.css">
+
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="css/index.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    </head>
+
+    
+    <body>
+        <div id="container">
+            <div id="paper_title"> <h1>NN-DAG: Real-time Neural-network-based diffuse acoustic generator</h1> </div>
+            <div id="paper_authors"> <b>Authors:</b> Anton Ratnarajah, Shi-Xiong Zhang, Meng Yu, Zhenyu Tang, Dinesh Manocha and Dong Yu</div>
+
+            <div id="paper_abstract"> <b>Abstract:</b> We propose a neural-network-based diffuse acoustic generator (NN-DAG) for generating room impulse responses (RIRs) for a given acoustic environment. Our NN-DAG takes room dimension, listener and speaker positions, and reverberation time (RT60) as inputs and models specular and diffuse reflections for a given acoustic environment. The proposed NN-DAG is capable of simulating RIRs for a given input RT60 with an average error of 0.02s. We evaluate our approach using Google Speech API, Microsoft Speech API, and Kaldi tools. We show that our proposed NN-DAG with batch size 1 is 400 times faster than a <a href="https://github.com/GAMMA-UMD/pygsound">state-of-the-art diffuse acoustic simulator (DAS)</a> on CPU and gives a similar performance to DAS in automatic speech recognition (ASR) experiments. Our NN-DAG is 12 times faster than an existing GPU-based RIR simulator gpuRIR. We show that our NN-DAG outperforms gpuRIR by 2.5% in an AMI far-field ASR experiment.</div>
+
+           <!-- 
+            <div id="description">
+                <h3>Our proposed architecture</h3>
+                <a><img src="img/architecture.png" width="100%" id="architecture"/></a>
+                <div id="architecture_caption"><b>Fig. 1. Our proposed network architecture.</b></div>          
+            </div>
+            -->
+            <div id="demos">
+                <h3>Audio Demos</h3>
+                
+                <!--<h4>I. High Noise Samples (SNR - 0dB)</h4>-->
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Room Dimension</th>
+                            <th style="text-align:center;">Listener Location</th>
+                            <th style="text-align:center;">Speaker Location</th>
+                            <th style="text-align:center;">Reverberation Time</th>
+                            <th style="text-align:center;">Clean Speech</th>
+                            <th style="text-align:center;"> RIR generated using DAS </th>
+                            <th style="text-align:center;"> Speech Simulated using DAS</th>
+                            <th style="text-align:center;">RIR generated using NN-DAG</th>
+                            <th style="text-align:center;"> Speech Simulated using NN-DAG</th>
+                        </tr>
+                    </thead>
+
+                     <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[8.4m,6.2m,3.3m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[0.38m,3.79m,0.49m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[1.18m,3.77m,1.01m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.21s</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/clean.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech5/DRIR-8159.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech5/DSRIR-8159.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech5/GRIR-8159.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech5/GSRIR-8159.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+        
+                    </tbody>                    
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[10m,6.2m,2.5m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[0.56m,0.6m,1.83m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[0.79m,1.11m,1.98m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.23s</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/clean.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech2/DRIR-1462.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech2/DSRIR-1462.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech2/GRIR-1462.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech2/GSRIR-1462.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+        
+                    </tbody>
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[8.8m,6.0m,2.5m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[2.31m,5.01m,1.14m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[1.33m,0.6m,2.04m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.26s</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/clean.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech6/DRIR-87.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech6/DSRIR-87.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech6/GRIR-87.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech6/GSRIR-87.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+        
+                    </tbody>                   
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[9.4m,6.2m,2.7m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[7.58m,1.94m,0.81m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[8.02m,1.38m,1.54m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.57s</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/clean.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech3/DRIR-2996.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech3/DSRIR-2996.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech3/GRIR-2996.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech3/GSRIR-2996.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[8m,7m,2.5m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[4.19m,4.39m,0.56m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[4.83m,6.97m,1.22m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.65s</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/clean.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech1/DRIR-10461.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech1/DSRIR-10461.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech1/GRIR-10461.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech1/GSRIR-10461.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+        
+                    </tbody>
+                    <tbody>
+
+                        <tr style="border-top:1px solid black">
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[8.4m,6.8m,3.1m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[8.1m,2.14m,0.86m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[3.87m,0.92m,1.51m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.68s</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/clean.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech4/DRIR-7510.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech4/DSRIR-7510.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech4/GRIR-7510.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <audio controls class="audio-player" preload="metadata" style="width: 240px;">
+                                    <source src="NN_Audio/speech4/GSRIR-7510.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+        
+                    </tbody>             
+                    
+        
+                    
+                </table>
+            </div>
+
+            <div id="spectrogram">
+                <h3>Spetrogram Demos</h3>
+                
+                <!--<h4>I. High Noise Samples (SNR - 0dB)</h4>-->
+                <table class="spectogram_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Room Dimension</th>
+                            <th style="text-align:center;">Listener Location</th>
+                            <th style="text-align:center;">Speaker Location</th>
+                            <th style="text-align:center;">Reverberation Time</th>
+                            <th style="text-align:center;">Spectorgram of RIR generated using DAS</th>
+                            <th style="text-align:center;">Spectorgram of RIR generated using NN-DAG</th>
+                           
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                             <td style="padding:0 10px 0 10px;">
+                                <b>[8.4m,6.2m,3.3m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[0.38m,3.79m,0.49m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[1.18m,3.77m,1.01m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.21s</b>
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech5/DSPEC.png" width="320px">
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech5/GSPEC.png" width="320px">
+                            </td>
+                           
+                    </tbody>
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[10m,6.2m,2.5m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[0.56m,0.6m,1.83m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[0.79m,1.11m,1.98m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.23s</b>
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech2/DSPEC.png" width="320px">
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech2/GSPEC.png" width="320px">
+                            </td>
+                           
+                    </tbody>
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[8.8m,6.0m,2.5m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[2.31m,5.01m,1.14m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[1.33m,0.6m,2.04m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.26s</b>
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech6/DSPEC.png" width="320px">
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech6/GSPEC.png" width="320px">
+                            </td>
+                           
+                    </tbody>
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[9.4m,6.2m,2.7m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[7.58m,1.94m,0.81m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[8.02m,1.38m,1.54m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.57s</b>
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech3/DSPEC.png" width="320px">
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech3/GSPEC.png" width="320px">
+                            </td>
+                           
+                    </tbody>
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[8m,7m,2.5m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[4.19m,4.39m,0.56m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[4.83m,6.97m,1.22m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.65s</b>
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech1/DSPEC.png" width="320px">
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech1/GSPEC.png" width="320px">
+                            </td>
+                           
+                    </tbody>                
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                           <td style="padding:0 10px 0 10px;">
+                                <b>[8.4m,6.8m,3.1m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[8.1m,2.14m,0.86m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>[3.87m,0.92m,1.51m]</b>
+                            </td>
+                            <td style="padding:0 10px 0 10px;">
+                                <b>0.68s</b>
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech4/DSPEC.png" width="320px">
+                            </td>
+                            <td style="padding:0 75px 0 75px;">
+                                <img src="NN_Audio/speech4/GSPEC.png" width="320px">
+                            </td>
+                           
+                    </tbody>                    
+                </table>
+            </div>
+        
+        <div id="footer">
+            <div>
+                <i>&copy October 2021</i><br>
+		<img src="img/tencent_icon.png" height="240px" alt="">
+        <img src="img/umd_icon.png" height="240px" alt="">
+            </div>
+	    <!--
+			<div style="display:inline-block;width:240px;">
+	            <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=tt&d=nTaFtZPYUn89zwQhD9zpswUR2BW5OqbAcpOeLX3H118&co=2d78ad&ct=ffffff&cmo=3acc3a&cmn=ff5353'></script>
+			</div>
+	     -->
+		</div>
+        
+        
+    
+    </body>
+</html>
